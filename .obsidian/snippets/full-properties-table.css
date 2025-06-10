@@ -1,0 +1,12 @@
+:root {
+  --metadata-label-width: max-content !important;
+}
+.metadata-property-key {
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow: visible !important;
+    text-overflow: initial !important;
+}

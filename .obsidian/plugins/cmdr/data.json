@@ -1,0 +1,53 @@
+{
+  "confirmDeletion": true,
+  "showAddCommand": true,
+  "debug": false,
+  "editorMenu": [],
+  "fileMenu": [],
+  "leftRibbon": [
+    {
+      "id": "quickadd:choice:1fa87966-d70e-4f0c-ab94-a4b2e1dfa3cf",
+      "icon": "lucide-armchair",
+      "name": "QuickAdd: Новый сотрудник",
+      "mode": "any",
+      "color": "#0630db"
+    },
+    {
+      "id": "quickadd:choice:cf85dc9f-c13e-456c-b5c8-51309bd722f0",
+      "icon": "lucide-ambulance",
+      "name": "QuickAdd: Новое действие",
+      "mode": "any",
+      "color": "#1f3cd8"
+    },
+    {
+      "id": "quickadd:choice:7e86d7b8-63d9-4ea9-b2e9-782e07f9df37",
+      "icon": "lucide-amphora",
+      "name": "QuickAdd: Новый артефакт",
+      "mode": "any",
+      "color": "#1f3cd8"
+    }
+  ],
+  "rightRibbon": [],
+  "titleBar": [],
+  "statusBar": [],
+  "pageHeader": [],
+  "macros": [],
+  "explorer": [],
+  "hide": {
+    "statusbar": [],
+    "leftRibbon": [
+      "Open today's daily note"
+    ]
+  },
+  "spacing": "8",
+  "advancedToolbar": {
+    "rowHeight": 48,
+    "rowCount": 1,
+    "spacing": 0,
+    "buttonWidth": 48,
+    "columnLayout": false,
+    "mappedIcons": [],
+    "tooltips": false,
+    "heightOffset": 0
+  }
+}

@@ -1,0 +1,57 @@
+.markdown-rendered_ tr_ {
+   max-width: 100px;
+}
+
+.cm-sizer {
+    max-width_: 100%!important;
+    --file-line-width:100%;
+}
+
+.markdown-rendered p {
+    max-width: 700px;
+    --file-line-width: 700px;
+}
+/*
+.markdown-rendered table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-top: 1px solid grey;
+}
+
+.markdown-rendered td,
+th {
+  margin: 0;
+  border: 1px solid grey;
+  white-space: nowrap;
+  border-top-width: 0px;
+}
+
+.markdown-rendered div {
+  width: 500px;
+  overflow-x: scroll;
+  margin-left: 5em;
+  overflow-y: visible;
+  padding: 0;
+}
+
+.markdown-rendered .headcol {
+  position: absolute;
+  width: 5em;
+  left: 0;
+  top: auto;
+  border-top-width: 1px;
+  //only relevant for first row
+  margin-top: -1px;
+  
+}
+
+.markdown-rendered .headcol:before {
+  content: 'Row ';
+}
+
+.markdown-rendered .long {
+  background: yellow;
+  letter-spacing: 1em;
+}
+
+*/
