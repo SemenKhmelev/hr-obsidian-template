@@ -1,0 +1,4 @@
+.markdown-source-view .cm-embed-block p{
+    word-break: keep-all!important;
+    white-space: pre!important;
+}

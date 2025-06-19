@@ -14,11 +14,14 @@ const latest = pages[0];
 await dv.header(2, `Последняя статья #focus: [[${latest.file.name}]]`);
 
 // Загрузим содержимое и покажем первые 10 строк как превью
+
 const content = await input.dv.io.load(latest.file.path);
-const preview = content.split("\n").slice(0, 10).join("\n");
-await input.dv.paragraph(
-      "```markdown\n" +
-      preview +
-      "\n```"
-    );
+const page = input.dv.page(latest.file.path)
+const preview = content.split("\n").slice(0, 20).join("\n");
+await input.dv.paragraph(preview);
+// await input.dv.paragraph(
+//       "```markdown\n" +
+//       preview +
+//       "\n```"
+//     );
 

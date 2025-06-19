@@ -1,7 +1,13 @@
+.gs-global-metrics-table .table-view-tbody td {
+    white-space: pre!important;
+    word-break: keep-all;
+    font-family: monospace;
+}
+
 .table-view-tbody td {
     padding: 8px 14px;
     vertical-align: top;
-    white-space: nowrap!important;
+    font-family: monospace;
 }
 
 div:has(.table-view-table) {

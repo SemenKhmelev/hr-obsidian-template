@@ -5,6 +5,7 @@ console.log(
 );
 
 const data = require(app.vault.adapter.basePath + "/_scripts/data.js");
+const container = input.dv.container;
 
 const employeePages = input.dv.pages('#employee and "Сотрудники"');
 const employees = employeePages
@@ -39,7 +40,7 @@ function pad(val, len = 5) {
 // СВОДНАЯ ТАБЛИЦА
 // ====================
 
-const headers = ["Область / Показатель"].concat(
+const headers = ["[[Памятка|Область / Показатель]]"].concat(
     employees.map(e => `[[${e.name}]]`).array()
 );
 
@@ -47,9 +48,11 @@ const headers = ["Область / Показатель"].concat(
 const areaRows = areas.map(area => {
     const row = [area];
     for (const e of employees) {
-        const simple  = pad(findLast(e.records, `${area} - простые`));
-        const middle  = pad(findLast(e.records, `${area} - средние`));
-        const complex = pad(findLast(e.records, `${area} - сложные`));
+        var simple  = data.colorize(pad(findLast(e.records, `${area} - простые`)));
+        var middle  = data.colorize(pad(findLast(e.records, `${area} - средние`)));
+        var complex = data.colorize(pad(findLast(e.records, `${area} - сложные`)));
+        
+
         row.push(`${simple} | ${middle} | ${complex}`);
     }
     return row;
@@ -59,7 +62,7 @@ const areaRows = areas.map(area => {
 const metricRows = metrics.map(metric => {
     const row = [metric];
     for (const e of employees) {
-        row.push(findLast(e.records, metric));
+        row.push(data.colorizeGradient(findLast(e.records, metric)));
     }
     return row;
 });
@@ -82,11 +85,31 @@ input.dv.header(2, "Сводная таблица по областям и по�
 
 input.dv.paragraph("Значения разбиты на группы задач 'простые|средние|сложные'")
 
-input.dv.table(headers, tableRows);
+await input.dv.table(headers, tableRows);
 
-input.dv.header(2, "Комментарии");
+const tables  = container.querySelectorAll(".table-view-table");
+ const lastTable = tables[tables.length - 1];
+  if (lastTable) {
+    lastTable.classList.add("gs-global-metrics-table");
+  } 
+
+// 3. Памятка
+  
+const path = "Памятка";
+await dv.header(3, `[[${path}]]:`);
+
+const page = input.dv.page(path)
+const content = await input.dv.io.load(page.file.path);
+await input.dv.paragraph(content);
+
+
+// 3. Коммеентрии по каждому сотруднику
+
+input.dv.header(2, "Актуальные комментарии по сотрудникам:");
 for (const e of employees) {
 
     input.dv.header(3, `[[${e.name}]]`); 
     input.dv.paragraph(findLast(e.records, "Общий комментарий"));     
 }
+
+

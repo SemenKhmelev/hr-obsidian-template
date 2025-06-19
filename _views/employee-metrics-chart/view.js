@@ -49,7 +49,7 @@ function drawRadar() {
             }]
         },
         options: {
-            responsive: true,
+            responsive: false,
             plugins: {
                 legend: {display: false},
                 title: {display: false},

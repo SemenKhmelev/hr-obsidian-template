@@ -26,6 +26,7 @@ for (const emp of employeePages) {
     const salaryObj = findLastField(records, "Зарплата");
     const increaseObj = findLastField(records, "Запрос на повышение");
     const increaseCommentObj = findLastField(records, "Запрос на повышение - комментарий");
+    const salaryCommentObj = findLastField(records, "Зарплата - комментарий");
 
     // Формируем строку
     allResults.push({
@@ -35,7 +36,7 @@ for (const emp of employeePages) {
         salaryFile: salaryObj ? salaryObj.file : null,
         increase: increaseObj ? increaseObj.value : "",
         increaseFile: increaseObj ? increaseObj.file : null,
-        increaseComment: increaseCommentObj ? increaseCommentObj.value : "",
+        increaseComment: increaseCommentObj ? increaseCommentObj.value : (salaryCommentObj ? salaryCommentObj.value : ""),
     });
 }
 
@@ -68,7 +69,7 @@ const rows = allResults.sort((a, b) => !b.name.localeCompare(a.name)).map(res =>
 // Добавляем строки СУММА и МЕДИАННА
 const salaries = allResults.map(r => r.salary).filter(x => x !== "");
 // Для каждой строки используем: если нет increase — подставляем salary
-const increasesOrSalaries = allResults.map(r => r.increase !== "" ? r.increase : r.salary).filter(x => x !== "");
+const increasesOrSalaries = allResults.map(r => (r.increase && r.increase !== "") ? r.increase : r.salary).filter(x => x !== "");
 
 // Строки сумм и медианы теперь используют increasesOrSalaries для колонки "Запрос на ЗП"
 rows.push(
