@@ -160,3 +160,19 @@ exports.salaryFields = salaryFields;
 exports.metrics_ext = metrics_ext;
 exports.colorize = colorize;
 exports.colorizeGradient = colorizeGradient;
+
+// Подсчет стажа работы в формате "N г. M мес." по дате найма
+function calcTenure(hireDate) {
+    if (!hireDate) return "";
+    const start = new Date(hireDate);
+    if (isNaN(start.getTime())) return "";
+    const today = new Date();
+    const monthsTotal = (today.getFullYear() - start.getFullYear()) * 12 +
+                        (today.getMonth() - start.getMonth());
+    if (monthsTotal < 0) return "";
+    const years = Math.floor(monthsTotal / 12);
+    const months = monthsTotal % 12;
+    return `${years > 0 ? years + " г. " : ""}${months} мес.`;
+}
+
+exports.calcTenure = calcTenure;
