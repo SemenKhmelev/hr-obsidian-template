@@ -21,6 +21,7 @@ function findLastField(records, key) {
 for (const emp of employeePages) {
     const empLink = emp.file.link;
     const records = data.GetRawMetricsData(input.dv, empLink);
+    const tenure = data.calcTenure(emp["Принят"]);
 
     // Ищем последнее значение для ЗП и запроса
     const salaryObj = findLastField(records, "Зарплата");
@@ -32,6 +33,7 @@ for (const emp of employeePages) {
     allResults.push({
         name: emp.file.name,
         link: empLink,
+        tenure,
         salary: salaryObj ? salaryObj.value : "",
         salaryFile: salaryObj ? salaryObj.file : null,
         increase: increaseObj ? increaseObj.value : "",
@@ -61,6 +63,7 @@ function fileLinkCell(value, file) {
 // Собираем финальную таблицу
 const rows = allResults.sort((a, b) => !b.name.localeCompare(a.name)).map(res => [
     input.dv.span(`[[${res.name}]]`),
+    res.tenure || "",
     fileLinkCell(res.salary, res.salaryFile),
     fileLinkCell(res.increase, res.increaseFile),
     res.increaseComment || "",
@@ -75,12 +78,14 @@ const increasesOrSalaries = allResults.map(r => (r.increase && r.increase !== ""
 rows.push(
     [
         "**СУММА**",
+        "",
         salaries.length ? sum(salaries) : "",
         increasesOrSalaries.length ? sum(increasesOrSalaries) : "",
         "",
     ],
     [
         "**МЕДИАННА**",
+        "",
         salaries.length ? median(salaries) : "",
         increasesOrSalaries.length ? median(increasesOrSalaries) : "",
         "",
@@ -90,6 +95,6 @@ rows.push(
 input.dv.header(2, "Сводная таблица зарплат и запросов сотрудников");
 
 input.dv.table(
-    ["Cотрудник", "Текущая ЗП", "Запрос на ЗП", "Комментарий к запросу"],
+    ["Cотрудник", "Стаж", "Текущая ЗП", "Запрос на ЗП", "Комментарий к запросу"],
     rows
 );
