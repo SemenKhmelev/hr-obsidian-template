@@ -90,3 +90,26 @@ input.dv.table(
     ["Cотрудник", "Текущая ЗП", "Запрос на ЗП", "Стаж", "Комментарий к запросу"],
     rows
 );
+
+const utils = require(app.vault.adapter.basePath + "/_scripts/markdown-utils.js");
+
+const getMarkdown = () => {
+    const h = [
+        "Cотрудник",
+        "Текущая ЗП",
+        "Запрос на ЗП",
+        "Стаж",
+        "Комментарий к запросу",
+    ];
+    const headers = h.map(utils.plainify);
+    const rowsPlain = rows.map(r => r.map(utils.plainify));
+    return dv.markdownTable(headers, rowsPlain);
+};
+
+input.dv.el(
+    "div",
+    utils.createMarkdownControls({
+        getMarkdown,
+        fileName: "salary-summary.md",
+    })
+);
