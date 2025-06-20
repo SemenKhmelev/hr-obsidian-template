@@ -19,6 +19,7 @@ for (const emp of employeePages) {
     const increaseObj = data.findLastValueAndFile(records, "Запрос на повышение");
     const increaseCommentObj = data.findLastValueAndFile(records, "Запрос на повышение - комментарий");
     const salaryCommentObj = data.findLastValueAndFile(records, "Зарплата - комментарий");
+    const lastRaise = data.findLastSalaryIncrease(records);
 
     // Формируем строку
     allResults.push({
@@ -30,6 +31,9 @@ for (const emp of employeePages) {
         increase: increaseObj ? increaseObj.value : "",
         increaseFile: increaseObj ? increaseObj.file : null,
         increaseComment: increaseCommentObj ? increaseCommentObj.value : (salaryCommentObj ? salaryCommentObj.value : ""),
+        lastRaiseAmount: lastRaise ? lastRaise.amount : "",
+        lastRaiseDate: lastRaise ? lastRaise.date.toISODate() : "",
+        lastRaiseFile: lastRaise ? lastRaise.file : null,
     });
 }
 
@@ -56,6 +60,8 @@ const rows = allResults.sort((a, b) => !b.name.localeCompare(a.name)).map(res =>
     input.dv.span(`[[${res.name}]]`),
     fileLinkCell(res.salary, res.salaryFile),
     fileLinkCell(res.increase, res.increaseFile),
+    fileLinkCell(res.lastRaiseDate, res.lastRaiseFile),
+    fileLinkCell(res.lastRaiseAmount, res.lastRaiseFile),
     res.tenure || "",
     res.increaseComment || "",
 ]);
@@ -73,12 +79,16 @@ rows.push(
         salaries.length ? sum(salaries) : "",
         increasesOrSalaries.length ? sum(increasesOrSalaries) : "",
         "",
+        "",
+        "",
     ],
     [
         "**МЕДИАННА**",
         "",
         salaries.length ? median(salaries) : "",
         increasesOrSalaries.length ? median(increasesOrSalaries) : "",
+        "",
+        "",
         "",
     ]
 );
@@ -87,7 +97,15 @@ rows.push(
 input.dv.header(2, "Сводная таблица зарплат и запросов сотрудников");
 
 input.dv.table(
-    ["Cотрудник", "Текущая ЗП", "Запрос на ЗП", "Стаж", "Комментарий к запросу"],
+    [
+        "Cотрудник",
+        "Текущая ЗП",
+        "Запрос на ЗП",
+        "Дата повышения",
+        "Сумма повышения",
+        "Стаж",
+        "Комментарий к запросу"
+    ],
     rows
 );
 
@@ -98,6 +116,8 @@ const getMarkdown = () => {
         "Cотрудник",
         "Текущая ЗП",
         "Запрос на ЗП",
+        "Дата повышения",
+        "Сумма повышения",
         "Стаж",
         "Комментарий к запросу",
     ];

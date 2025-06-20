@@ -175,6 +175,38 @@ exports.metrics_ext = metrics_ext;
 exports.colorize = colorize;
 exports.colorizeGradient = colorizeGradient;
 exports.findLastValueAndFile = findLastValueAndFile;
+exports.findLastSalaryIncrease = findLastSalaryIncrease;
+
+// Определить дату и размер последнего повышения ЗП
+function findLastSalaryIncrease(records, key = "Зарплата") {
+    const latest = findLastValueAndFile(records, key);
+    if (!latest) return null;
+
+    let idx = records.findIndex(
+        r => r.page.path === latest.file.path && r.date.valueOf() === latest.date.valueOf()
+    );
+    idx = idx < 0 ? 0 : idx + 1;
+
+    let currentValue = parseFloat(latest.value);
+    let currentDate = latest.date;
+    let currentFile = latest.file;
+
+    for (let i = idx; i < records.length; i++) {
+        const rec = records[i];
+        const valRaw = rec.props[key];
+        if (valRaw === undefined || valRaw === "") continue;
+        const val = parseFloat(valRaw);
+        if (isNaN(val)) continue;
+        if (val < currentValue) {
+            return { amount: currentValue - val, date: currentDate, file: currentFile };
+        } else if (val > currentValue) {
+            currentValue = val;
+            currentDate = rec.date;
+            currentFile = rec.page;
+        }
+    }
+    return null;
+}
 
 // Подсчет стажа работы в формате "N г. M мес." по дате найма
 function calcTenure(hireDate) {
