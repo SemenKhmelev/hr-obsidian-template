@@ -5,7 +5,7 @@ function GetRawMetricsData(dvarg, employeeLink) {
 
     console.log("Запрос GetRawMetricsData из файла:" + dvarg.current().file)
 
-    employeePage = dvarg.page(employeeLink.path);
+    const employeePage = dvarg.page(employeeLink.path);
 
     // Находим все страницы с тегом "hr-action", которые содержат ListItem, ссылающийся на нужное имя
     const pages = employeePage.file.inlinks
@@ -20,7 +20,7 @@ function GetRawMetricsData(dvarg, employeeLink) {
         // Дата — из имени файла (ожидается шаблон yyyy-mm-dd - ...)
         // const dateMatch = page.file.name.match(/^(\d{4}-\d{2}-\d{2})/);
         // const date = dateMatch ? dateMatch[1] : "0000-00-00";
-        date = page.file.day;
+        const date = page.file.day;
 
         for (let li of (page.file.lists || [])) {
             if (li.name.path !== employeeLink.path) continue;
