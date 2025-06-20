@@ -87,6 +87,23 @@ input.dv.paragraph("Значения разбиты на группы задач
 
 await input.dv.table(headers, tableRows);
 
+
+const utils = require(app.vault.adapter.basePath + "/_scripts/markdown-utils.js");
+
+const getMarkdown = () => {
+    const h = headers.map(utils.plainify);
+    const rows = tableRows.map(r => r.map(utils.plainify));
+    return dv.markdownTable(h, rows);
+};
+
+input.dv.el(
+    "div",
+    utils.createMarkdownControls({
+        getMarkdown,
+        fileName: "global-metrics.md"
+    })
+);
+
 const tables  = container.querySelectorAll(".table-view-table");
  const lastTable = tables[tables.length - 1];
   if (lastTable) {
