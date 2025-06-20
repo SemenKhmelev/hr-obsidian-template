@@ -70,12 +70,14 @@ const salaryFields = [
 ];
 
 function colorize(value) {
-    // Привести к строке, удалить пробелы и невидимые символы по краям
-    let str = (value ?? "").toString().trim();
+    // Привести к строке. Не обрезаем, чтобы сохранить пробелы в конце
+    let str = (value ?? "").toString();
+    // Отдельно получим подстроку без пробелов и спецсимволов по краям
+    let cleaned = str.trim();
 
     // Дополнительно убрать не-числовые символы в начале и конце
     // Например, можно убрать всё, кроме цифр, точки и вопроса
-    let stripped = str.replace(/^[^\d\.\?]+|[^\d\.\?]+$/g, '');
+    let stripped = cleaned.replace(/^[^\d\.\?]+|[^\d\.\?]+$/g, '');
 
     // Обработка пустых, null и невалидных значений
     if (!stripped || stripped === "n" || stripped === "?") {
@@ -102,9 +104,11 @@ function colorize(value) {
 }
 
 function colorizeGradient(value) {
-    // Привести к строке и убрать пробелы и спецсимволы по краям
-    let str = (value ?? "").toString().trim();
-    let stripped = str.replace(/^[^\d\.\?]+|[^\d\.\?]+$/g, '');
+    // Привести к строке без обрезки, чтобы сохранить завершающие пробелы
+    let str = (value ?? "").toString();
+    // Обрезанную версию используем для анализа числа
+    let cleaned = str.trim();
+    let stripped = cleaned.replace(/^[^\d\.\?]+|[^\d\.\?]+$/g, '');
 
     // Не число/некорректно
     if (!stripped || stripped === "n" || stripped === "?") {
