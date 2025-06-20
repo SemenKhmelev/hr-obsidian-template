@@ -63,9 +63,9 @@ function fileLinkCell(value, file) {
 // Собираем финальную таблицу
 const rows = allResults.sort((a, b) => !b.name.localeCompare(a.name)).map(res => [
     input.dv.span(`[[${res.name}]]`),
-    res.tenure || "",
     fileLinkCell(res.salary, res.salaryFile),
     fileLinkCell(res.increase, res.increaseFile),
+    res.tenure || "",
     res.increaseComment || "",
 ]);
 
@@ -91,10 +91,11 @@ rows.push(
         "",
     ]
 );
+
 // Рендерим таблицу
 input.dv.header(2, "Сводная таблица зарплат и запросов сотрудников");
 
 input.dv.table(
-    ["Cотрудник", "Стаж", "Текущая ЗП", "Запрос на ЗП", "Комментарий к запросу"],
+    ["Cотрудник", "Текущая ЗП", "Запрос на ЗП", "Стаж", "Комментарий к запросу"],
     rows
 );
