@@ -11,16 +11,6 @@ const records = data.GetRawMetricsData(input.dv, employeeFile);
 
 const fields = data.salaryFields;
 
-// Функция для поиска последнего значения и файла для каждого поля
-function findLastValueAndFile(records, key) {
-    for (const rec of records) {
-        if ((rec.props[key] !== undefined) && (rec.props[key] !== "")) {
-            return { value: rec.props[key], file: rec.page, date: rec.date };
-        }
-    }
-    return null;
-}
-
 // Оборачиваем значение в ссылку на файл
 function fileLinkCell(value, file) {
     if (!value) return "";
@@ -32,8 +22,8 @@ function fileLinkCell(value, file) {
 const fieldData = fields
     .filter(fld => fld.indexOf(" - комментарий") === -1)
     .map(fld => {
-        const obj = findLastValueAndFile(records, fld);
-        const commentObj = findLastValueAndFile(records, fld + " - комментарий");
+        const obj = data.findLastValueAndFile(records, fld);
+        const commentObj = data.findLastValueAndFile(records, fld + " - комментарий");
         return [
             fld,
             fileLinkCell(obj?.value, obj?.file),

@@ -9,25 +9,16 @@ const data = require(app.vault.adapter.basePath + "/_scripts/data.js");
 const employeePages = input.dv.pages('#employee and "Сотрудники"');
 const allResults = [];
 
-function findLastField(records, key) {
-    for (const rec of records) {
-        if (rec.props[key] !== undefined && rec.props[key] !== "") {
-            return { value: rec.props[key], date: rec.date, file: rec.page };
-        }
-    }
-    return null;
-}
-
 for (const emp of employeePages) {
     const empLink = emp.file.link;
     const records = data.GetRawMetricsData(input.dv, empLink);
     const tenure = data.calcTenure(emp["Принят"]);
 
     // Ищем последнее значение для ЗП и запроса
-    const salaryObj = findLastField(records, "Зарплата");
-    const increaseObj = findLastField(records, "Запрос на повышение");
-    const increaseCommentObj = findLastField(records, "Запрос на повышение - комментарий");
-    const salaryCommentObj = findLastField(records, "Зарплата - комментарий");
+    const salaryObj = data.findLastValueAndFile(records, "Зарплата");
+    const increaseObj = data.findLastValueAndFile(records, "Запрос на повышение");
+    const increaseCommentObj = data.findLastValueAndFile(records, "Запрос на повышение - комментарий");
+    const salaryCommentObj = data.findLastValueAndFile(records, "Зарплата - комментарий");
 
     // Формируем строку
     allResults.push({

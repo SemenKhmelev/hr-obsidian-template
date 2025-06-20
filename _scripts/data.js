@@ -149,6 +149,16 @@ function interpolateColor(a, b, t) {
     return `#${rr.toString(16).padStart(2,"0")}${rg.toString(16).padStart(2,"0")}${rb.toString(16).padStart(2,"0")}`;
 }
 
+// Retrieve the most recent value for a given key along with source file and date
+function findLastValueAndFile(records, key) {
+    for (const rec of records) {
+        if (rec.props[key] !== undefined && rec.props[key] !== "") {
+            return { value: rec.props[key], file: rec.page, date: rec.date };
+        }
+    }
+    return null;
+}
+
 
 
 exports.default = (arg) => {console.log(arg)}
@@ -160,6 +170,7 @@ exports.salaryFields = salaryFields;
 exports.metrics_ext = metrics_ext;
 exports.colorize = colorize;
 exports.colorizeGradient = colorizeGradient;
+exports.findLastValueAndFile = findLastValueAndFile;
 
 // Подсчет стажа работы в формате "N г. M мес." по дате найма
 function calcTenure(hireDate) {
