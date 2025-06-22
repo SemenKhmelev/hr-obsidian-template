@@ -61,7 +61,7 @@ const rows = allResults.sort((a, b) => !b.name.localeCompare(a.name)).map(res =>
     fileLinkCell(res.salary, res.salaryFile),
     fileLinkCell(res.increase, res.increaseFile),
     fileLinkCell(res.lastRaiseDate, res.lastRaiseFile),
-    fileLinkCell(res.lastRaiseAmount, res.lastRaiseFile),
+    //fileLinkCell(res.lastRaiseAmount, res.lastRaiseFile),
     res.tenure || "",
     res.increaseComment || "",
 ]);
@@ -78,7 +78,7 @@ rows.push(
         "",
         salaries.length ? sum(salaries) : "",
         increasesOrSalaries.length ? sum(increasesOrSalaries) : "",
-        "",
+        //"",
         "",
         "",
     ],
@@ -87,7 +87,7 @@ rows.push(
         "",
         salaries.length ? median(salaries) : "",
         increasesOrSalaries.length ? median(increasesOrSalaries) : "",
-        "",
+        //"",
         "",
         "",
     ]
@@ -99,12 +99,12 @@ input.dv.header(2, "Сводная таблица зарплат и запрос
 input.dv.table(
     [
         "Cотрудник",
-        "Текущая ЗП",
-        "Запрос на ЗП",
-        "Дата повышения",
-        "Сумма повышения",
+        "Текущая\nЗП",
+        "Запрос\nна ЗП",
+        "Last inc.",
+        //"Sum inc",
         "Стаж",
-        "Комментарий к запросу"
+        "Комментарий \nк запросу"
     ],
     rows
 );
@@ -117,7 +117,7 @@ const getMarkdown = () => {
         "Текущая ЗП",
         "Запрос на ЗП",
         "Дата повышения",
-        "Сумма повышения",
+        //"Сумма повышения",
         "Стаж",
         "Комментарий к запросу",
     ];

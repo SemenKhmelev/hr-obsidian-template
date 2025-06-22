@@ -1,6 +1,10 @@
 
 console.log("Загрузка _scripts/data.js")
 
+/**
+ * Получить список всех hr-actions для данного сотрудника
+ * Массив состоит из {date, listItem, page}, listItem у которого есть ключ name указывающий  на сотрудника
+ */
 function GetRawMetricsData(dvarg, employeeLink) {
 
     console.log("Запрос GetRawMetricsData из файла:" + dvarg.current().file)
@@ -205,7 +209,7 @@ function findLastSalaryIncrease(records, key = "Зарплата") {
             currentFile = rec.page;
         }
     }
-    return null;
+    return {amount: null, date: latest.date, file: latest.file };
 }
 
 // Подсчет стажа работы в формате "N г. M мес." по дате найма
