@@ -31,9 +31,9 @@ function findLast(records, key) {
 
 
 // Выровнять значение до N символов (по левому краю)
-function pad(val, len = 5) {
+function pad(val, len = 4) {
     val = val === undefined || val === "" ? "n" : String(val);
-    return val.padEnd(len, " ");
+    return val.padStart(len, " ");
 }
 
 // ====================

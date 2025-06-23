@@ -85,7 +85,7 @@ function colorize(value) {
 
     // Обработка пустых, null и невалидных значений
     if (!stripped || stripped === "n" || stripped === "?") {
-        return `<span style="color:gray;font-size:smaller">${str}</span>`;
+        return `<span style="color:gray;">${str}</span>`;
     }
 
     // Вырезаем вопрос — только для сравнения, не для отображения
@@ -94,14 +94,14 @@ function colorize(value) {
 
     // Если это не число — серое и мелким шрифтом
     if (isNaN(num)) {
-        return `<span style="color:gray;font-size:smaller">${str}</span>`;
+        return `<span style="color:gray;">${str}</span>`;
     }
 
     // Окрас по условию
     if (num < 1) {
-        return `<span style="color:rgb(248, 0, 0)">${str}</span>`;
+        return `<span style="color:rgb(0, 0, 0)">${str}</span>`;
     } else if (num >= 1) {
-        return `<span style="color:rgb(3, 59, 241); font-weight:bold;">${str}</span>`;
+        return `<span style="color:rgb(0, 182, 30); font-weight:bold;">${str}</span>`;
     } else {
         return str;
     }
@@ -116,7 +116,7 @@ function colorizeGradient(value) {
 
     // Не число/некорректно
     if (!stripped || stripped === "n" || stripped === "?") {
-        return `<span style="color:gray;font-size:smaller">${str}</span>`;
+        return `<div style="text-align:center"><span style="color:gray;">${str}</span></div>`;
     }
 
     // Извлекаем число для сравнения
@@ -124,14 +124,14 @@ function colorizeGradient(value) {
     let num = parseFloat(numPart);
 
     if (isNaN(num)) {
-        return `<span style="color:gray;font-size:smaller">${str}</span>`;
+        return `<div style="text-align:center"><span style="color:gray;">${str}</span></div>`;
     }
 
     // Границы
     if (num < 0) num = 0;
     if (num > 5) num = 5;
 
-    // Градиент: 0 (красный #d32f2f), 2.5 (жёлтый #fbc02d), 5 (зелёныйrgb(14, 241, 25))
+    // Градиент: 0 (красный #d32f2f), 2.5 (жёлтый #fbc02d), 5 (зелёный#00b61e)
     let color, weight = "";
     if (num <= 2.5) {
         // Красный -> Жёлтый
@@ -140,11 +140,11 @@ function colorizeGradient(value) {
     } else {
         // Жёлтый -> Зелёный
         let t = (num - 2.5) / 2.5;
-        color = interpolateColor("#fbc02d", "#388e3c", t);
-        if (num === 5) weight = "font-weight:bold;";
+        color = interpolateColor("#fbc02d", "#00b61e", t);
+        if (num >= 4) weight = "font-weight:bold;";
     }
 
-    return `<span style="color:${color};${weight}">${str}</span>`;
+    return `<div style="text-align:center"><span style="color:${color};${weight}">${str}</span></div>`;
 }
 
 // Вспомогательная функция для интерполяции цветов в HEX
